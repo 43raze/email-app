@@ -1,10 +1,10 @@
-import './assets/main.css'
+import './assets/index.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
 
-// Bootstrap CSS & JS
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import { createBootstrap } from 'bootstrap-vue-next/plugins/createBootstrap'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.use(createBootstrap())
+app.mount('#app')
