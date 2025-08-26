@@ -15,6 +15,8 @@ function login(nickname, password) {
   console.log(`Вход выполнен: ${currentAccount.emailAddress}`)
 }
 
+const currentEmails = []
+
 const email = {
   id: 'aabbccdd',
   subject: 'greetings',
@@ -37,10 +39,8 @@ const email = {
 //   },
 // }
 
-const currentEmails = []
-
 // repositoryAccounts
-register('bob', 'qwerty123', 'Petya', 'Petrov')
+// register('bob', 'qwerty123', 'Petya', 'Petrov')
 // repositoryAccounts
 // registerAccount('alice', 'pass456', 'Anna', 'Ivanova')
 // registerAccount('bob', 'qwerty123', 'Petya', 'Petrov')

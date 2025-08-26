@@ -14,6 +14,9 @@ function createAccount(nickname, password, firstName, lastName) {
     get emailAddress() {
       return `${this.nickname}@${this.server}`
     },
+    get fullName() {
+      return `${this.firstName} ${this.lastName}`
+    },
   }
 }
 
