@@ -4,7 +4,8 @@ import LoginModal from './components/LoginModal.vue'
 import RegisterModal from './components/RegisterModal.vue'
 import MailSidebar from './components/MailSidebar.vue'
 import MailContent from './components/MailContent.vue'
-import { register } from '@/model/cl.js'
+import { register } from './model/cl.js'
+
 export default {
   components: {
     NavbarAuth,
@@ -40,7 +41,7 @@ export default {
 
         <LoginModal />
 
-        <RegisterModal @submit-registration="handleRegister" />
+        <RegisterModal @submit-account="console.log" />
       </div>
 
       <template v-else>

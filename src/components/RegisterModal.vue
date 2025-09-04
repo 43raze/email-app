@@ -1,5 +1,5 @@
 <script>
-import { randId } from '@/model/shared'
+import { randId } from '@/model/shared.js'
 import {
   BModal,
   BForm,
@@ -8,8 +8,8 @@ import {
   BButton,
 } from 'bootstrap-vue-next'
 
-const currentAccount = () => ({
-  id: randId,
+const initAccount = () => ({
+  id: randId(),
   nickname: '',
   password: '',
   firstName: '',
@@ -18,43 +18,39 @@ const currentAccount = () => ({
 
 export default {
   components: { BModal, BForm, BFormGroup, BFormInput, BButton },
-  emits: ['submit-registration'],
+
+  emits: ['submit-account'],
 
   data() {
-    return { account: currentAccount() }
+    return { account: initAccount() }
   },
 
   methods: {
-    submitRegister() {},
+    submitAccount() {
+      this.$emit('submit-account', { ...this.account })
+      this.account = initAccount()
+    },
   },
 }
 </script>
 
 <template>
   <BModal v-bind:model-value="true" id="register-modal" title="Регистрация">
-    <BForm @submit.prevent="submitRegister">
+    <BForm @submit.prevent="submitAccount">
       <BFormGroup label="Никнейм">
-        <BFormInput :value="nickname" @input="nickname = $event.target.value" />
+        <BFormInput v-model="account.nickname" />
       </BFormGroup>
 
       <BFormGroup label="Пароль">
-        <BFormInput
-          type="password"
-          :value="password"
-          @input="password = $event.target.value"
-        />
+        <BFormInput v-model="account.password" type="password" />
       </BFormGroup>
 
       <BFormGroup label="Имя">
-        <BFormInput
-          placeholder="Enter your name"
-          :value="firstName"
-          @input="firstName = $event.target.value"
-        />
+        <BFormInput v-model="account.firstName" placeholder="Enter your name" />
       </BFormGroup>
 
       <BFormGroup label="Фамилия" class="mb-2">
-        <BFormInput :value="lastName" @input="lastName = $event.target.value" />
+        <BFormInput v-model="account.lastName" />
       </BFormGroup>
 
       <BButton type="submit" variant="success"> Зарегистрироваться </BButton>
