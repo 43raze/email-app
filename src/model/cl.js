@@ -1,4 +1,4 @@
-import { addAccount, findAccount } from './sv.js'
+import { addAccount, findAccount, addEmail, findEmails } from './sv.js'
 
 let currentAccount = null
 
@@ -15,17 +15,30 @@ function login(nickname, password) {
   console.log(`Вход выполнен: ${currentAccount.emailAddress}`)
 }
 
+function sendEmail(subject, text, recipient) {
+  const sender = currentAccount.emailAddress
+  addEmail(subject, text, sender, recipient)
+  console.log('Hi', 'test', 'alice@mailbox.com')
+}
+
+function emailInbox() {
+  if (!currentAccount) return null
+  return findEmails(currentAccount.emailAddress)
+}
+
+export { register, login, sendEmail, emailInbox }
+
 const currentEmails = []
 
-const email = {
-  id: 'aabbccdd',
-  subject: 'greetings',
-  text: 'hello bob',
-  sender: 'bob@mailbox.com',
-  recipient: 'alice@mailbox.com',
-  singature: 'ff0077aa',
-  attachment: null,
-}
+// const email = {
+//   id: 'aabbccdd',
+//   subject: 'greetings',
+//   text: 'hello bob',
+//   sender: 'bob@mailbox.com',
+//   recipient: 'alice@mailbox.com',
+//   singature: 'ff0077aa',
+//   attachment: null,
+// }
 
 // const account = {
 //   id: 'ff00aa77',
@@ -38,20 +51,3 @@ const email = {
 //     return 'bob@mailbox.com'
 //   },
 // }
-
-// repositoryAccounts
-// register('bob', 'qwerty123', 'Petya', 'Petrov')
-// repositoryAccounts
-// registerAccount('alice', 'pass456', 'Anna', 'Ivanova')
-// registerAccount('bob', 'qwerty123', 'Petya', 'Petrov')
-
-// console.log(repositoryAccounts)
-// console.log(repositoryAccounts[0].emailAddress)
-// console.log(repositoryAccounts[1].emailAddress)
-
-// currentAccount
-// login('bob', 'qwerty123')
-// currentAccount
-
-// login('alice', 'pass456')
-// // console.log('Письма для Alice:', getCurrentEmails())

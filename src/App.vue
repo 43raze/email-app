@@ -4,7 +4,7 @@ import LoginModal from './components/LoginModal.vue'
 import RegisterModal from './components/RegisterModal.vue'
 import MailSidebar from './components/MailSidebar.vue'
 import MailContent from './components/MailContent.vue'
-
+import { register } from '@/model/cl.js'
 export default {
   components: {
     NavbarAuth,
@@ -16,8 +16,15 @@ export default {
 
   data() {
     return {
-      isLoggedIn: false, // для теста todo удалить
+      isLoggedIn: true, // для теста todo удалить
+      accounts: [],
     }
+  },
+
+  methods: {
+    handleRegister() {
+      this.isLoggedIn = true
+    },
   },
 }
 </script>
@@ -33,7 +40,7 @@ export default {
 
         <LoginModal />
 
-        <RegisterModal />
+        <RegisterModal @submit-registration="handleRegister" />
       </div>
 
       <template v-else>
