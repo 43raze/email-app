@@ -22,20 +22,33 @@ export default {
   emits: ['submit-account'],
 
   data() {
-    return { account: initAccount() }
+    return {
+      account: initAccount(),
+      showModal: false,
+      errorMessage: '',
+    }
   },
 
   methods: {
     submitAccount() {
+      const { nickname, password, firstName, lastName } = this.account
+
+      if (!nickname || !password || !firstName || !lastName) {
+        this.errorMessage = 'Все поля обязательны для заполнения'
+        return
+      }
+
       this.$emit('submit-account', { ...this.account })
       this.account = initAccount()
+      this.errorMessage = ''
+      this.close()
     },
   },
 }
 </script>
 
 <template>
-  <BModal v-bind:model-value="true" id="register-modal" title="Регистрация">
+  <BModal v-model="showModal" id="register-modal" title="Регистрация">
     <BForm @submit.prevent="submitAccount">
       <BFormGroup label="Никнейм">
         <BFormInput v-model="account.nickname" />
@@ -52,6 +65,10 @@ export default {
       <BFormGroup label="Фамилия" class="mb-2">
         <BFormInput v-model="account.lastName" />
       </BFormGroup>
+
+      <p v-if="errorMessage" class="text-danger mb-2">
+        {{ errorMessage }}
+      </p>
 
       <BButton type="submit" variant="success"> Зарегистрироваться </BButton>
     </BForm>

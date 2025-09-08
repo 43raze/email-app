@@ -4,7 +4,7 @@ import LoginModal from './components/LoginModal.vue'
 import RegisterModal from './components/RegisterModal.vue'
 import MailSidebar from './components/MailSidebar.vue'
 import MailContent from './components/MailContent.vue'
-import { register } from './model/cl.js'
+import { login, register } from './model/cl.js'
 
 export default {
   components: {
@@ -17,13 +17,26 @@ export default {
 
   data() {
     return {
-      isLoggedIn: true, // для теста todo удалить
       accounts: [],
+      isLoggedIn: false,
+      showLogin: false,
+      showRegister: false,
     }
   },
 
   methods: {
-    handleRegister() {
+    openRegister() {
+      this.showRegister = true
+    },
+    openLogin() {
+      this.showLogin = true
+    },
+    handleRegister(account) {
+      register(account)
+      this.isLoggedIn = true
+    },
+    handleLogin(account) {
+      login(account)
       this.isLoggedIn = true
     },
   },
@@ -32,16 +45,23 @@ export default {
 
 <template>
   <div class="vh-100 d-flex flex-column">
-    <NavbarAuth />
+    <NavbarAuth
+      :is-logged-in="isLoggedIn"
+      @open-register="openRegister"
+      @open-login="openLogin"
+      @logout="isLoggedIn = false"
+    />
 
     <div class="d-flex flex-grow-1">
-      <div v-if="isLoggedIn" class="container mt-4">
+      <div v-if="!isLoggedIn" class="container mt-4 text-center">
         <h2>Добро пожаловать</h2>
-        <p>Используйте кнопки "Войти" или "Регистрация".</p>
+        <p>Используйте кнопки вверху, чтобы войти или зарегистрироваться.</p>
 
-        <LoginModal />
-
-        <RegisterModal @submit-account="console.log" />
+        <LoginModal v-model="showLogin" @submit-login="handleLogin" />
+        <RegisterModal
+          v-model="showRegister"
+          @submit-account="handleRegister"
+        />
       </div>
 
       <template v-else>

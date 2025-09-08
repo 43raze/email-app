@@ -1,4 +1,5 @@
 <script>
+import { randId } from '@/model/shared.js'
 import {
   BModal,
   BForm,
@@ -7,8 +8,16 @@ import {
   BButton,
 } from 'bootstrap-vue-next'
 
+const initAccount = () => ({
+  id: randId(),
+  nickname: '',
+  password: '',
+})
+
 export default {
   components: { BModal, BForm, BFormGroup, BFormInput, BButton },
+
+  emits: ['submit-login'],
 }
 </script>
 
