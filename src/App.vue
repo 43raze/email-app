@@ -4,6 +4,9 @@ import LoginModal from './components/LoginModal.vue'
 import RegisterModal from './components/RegisterModal.vue'
 import MailSidebar from './components/MailSidebar.vue'
 import MailContent from './components/MailContent.vue'
+import SuccessfullRegistration from './components/SuccessfullRegistration.vue'
+import MainPage from './components/MainPage.vue'
+
 import { login, register } from './model/cl.js'
 
 export default {
@@ -13,14 +16,17 @@ export default {
     RegisterModal,
     MailSidebar,
     MailContent,
+    SuccessfullRegistration,
+    MainPage,
   },
 
   data() {
     return {
       accounts: [],
-      isLoggedIn: false,
       showLogin: false,
       showRegister: false,
+      isLoggedIn: false,
+      successfullRegistration: false,
     }
   },
 
@@ -28,23 +34,28 @@ export default {
     openRegister() {
       this.showRegister = true
     },
+
     openLogin() {
       this.showLogin = true
     },
-    handleRegister(account) {
-      register(account)
-      this.isLoggedIn = true
+
+    handleRegister(nickname, password, firstName, lastName) {
+      register(nickname, password, firstName, lastName)
+      this.successfullRegistration = true
+      this.showRegister = false
     },
-    handleLogin(account) {
-      login(account)
+
+    handleLogin(nickname, password) {
+      login(nickname, password)
       this.isLoggedIn = true
+      this.showLogin = false
     },
   },
 }
 </script>
 
 <template>
-  <div class="vh-100 d-flex flex-column">
+  <div class="container-fluid vh-100 d-flex flex-column">
     <NavbarAuth
       :is-logged-in="isLoggedIn"
       @open-register="openRegister"
@@ -52,23 +63,34 @@ export default {
       @logout="isLoggedIn = false"
     />
 
-    <div class="d-flex flex-grow-1">
-      <div v-if="!isLoggedIn" class="container mt-4 text-center">
-        <h2>Добро пожаловать</h2>
-        <p>Используйте кнопки вверху, чтобы войти или зарегистрироваться.</p>
+    <div v-if="!isLoggedIn" class="flex-grow-1 d-flex flex-column">
+      <SuccessfullRegistration
+        v-if="successfullRegistration"
+        @open-login="openLogin"
+      />
 
-        <LoginModal v-model="showLogin" @submit-login="handleLogin" />
-        <RegisterModal
-          v-model="showRegister"
-          @submit-account="handleRegister"
-        />
-      </div>
-
-      <template v-else>
-        <MailSidebar />
-
-        <MailContent />
-      </template>
+      <MainPage v-else />
     </div>
+
+    <div v-else class="d-flex flex-grow-1">
+      <MailSidebar />
+      <MailContent />
+    </div>
+
+    <RegisterModal
+      v-model="showRegister"
+      @submit-account="
+        handleRegister(
+          $event.nickname,
+          $event.password,
+          $event.firstName,
+          $event.lastName
+        )
+      "
+    />
+    <LoginModal
+      v-model="showLogin"
+      @submit-login="handleLogin($event.nickname, $event.password)"
+    />
   </div>
 </template>

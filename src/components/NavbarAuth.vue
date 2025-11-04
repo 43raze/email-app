@@ -16,14 +16,14 @@ export default {
 </script>
 
 <template>
-  <BNavbar type="dark" variant="secondary" class="justify-content-between">
+  <BNavbar type="dark" variant="primary" class="justify-content-between">
     <BNavbarBrand href="#">Email App</BNavbarBrand>
 
     <div>
-      <template v-if="!isLoggedIn">
+      <div v-if="!isLoggedIn">
         <BButton
           size="sm"
-          variant="primary"
+          variant="light"
           @click="$emit('open-login')"
           class="me-2"
         >
@@ -33,13 +33,11 @@ export default {
         <BButton size="sm" variant="success" @click="$emit('open-register')">
           Регистрация
         </BButton>
-      </template>
+      </div>
 
-      <template v-else>
-        <BButton size="sm" variant="danger" @click="$emit('logout')">
-          Выйти
-        </BButton>
-      </template>
+      <BButton v-else size="sm" variant="danger" @click="$emit('logout')">
+        Выйти
+      </BButton>
     </div>
   </BNavbar>
 </template>

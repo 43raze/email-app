@@ -39,38 +39,46 @@ export default {
       }
 
       this.$emit('submit-account', { ...this.account })
+
+      this.showModal = false
+
       this.account = initAccount()
       this.errorMessage = ''
-      this.close()
     },
   },
 }
 </script>
 
 <template>
-  <BModal v-model="showModal" id="register-modal" title="Регистрация">
+  <BModal
+    v-model="showModal"
+    id="register-modal"
+    title="Регистрация"
+    @ok.prevent="submitAccount"
+  >
     <BForm @submit.prevent="submitAccount">
       <BFormGroup label="Никнейм">
-        <BFormInput v-model="account.nickname" />
+        <BFormInput v-model.trim="account.nickname" />
       </BFormGroup>
 
       <BFormGroup label="Пароль">
-        <BFormInput v-model="account.password" type="password" />
+        <BFormInput v-model.trim="account.password" type="password" />
       </BFormGroup>
 
       <BFormGroup label="Имя">
-        <BFormInput v-model="account.firstName" placeholder="Enter your name" />
+        <BFormInput
+          v-model.trim="account.firstName"
+          placeholder="Enter your name"
+        />
       </BFormGroup>
 
       <BFormGroup label="Фамилия" class="mb-2">
-        <BFormInput v-model="account.lastName" />
+        <BFormInput v-model.trim="account.lastName" />
       </BFormGroup>
 
       <p v-if="errorMessage" class="text-danger mb-2">
         {{ errorMessage }}
       </p>
-
-      <BButton type="submit" variant="success"> Зарегистрироваться </BButton>
     </BForm>
   </BModal>
 </template>

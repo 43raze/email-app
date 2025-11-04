@@ -1,6 +1,7 @@
 import { addAccount, findAccount, addEmail, findEmails } from './sv.js'
 
 let currentAccount = null
+const currentEmails = []
 
 function register(nickname, password, firstName, lastName) {
   const account = addAccount(nickname, password, firstName, lastName)
@@ -12,7 +13,6 @@ function login(nickname, password) {
   const account = findAccount(nickname, password)
   if (!account) return console.error('Неверный логин или пароль')
   currentAccount = account
-  console.log(`Вход выполнен: ${currentAccount.emailAddress}`)
 }
 
 function sendEmail(subject, text, recipient) {
@@ -27,8 +27,6 @@ function emailInbox() {
 }
 
 export { register, login, sendEmail, emailInbox }
-
-const currentEmails = []
 
 // const email = {
 //   id: 'aabbccdd',

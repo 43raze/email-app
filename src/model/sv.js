@@ -3,12 +3,12 @@ import { randId } from './shared.js'
 const repositoryEmails = []
 const repositoryAccounts = []
 
-function createAccount(nickname, password, firstName, lastName) {
+function createAccount(nickname, passworld, firstName, lastName) {
   return {
     id: randId(),
     server: 'mailbox.com',
     nickname,
-    password,
+    passworld,
     firstName,
     lastName,
     get emailAddress() {
@@ -21,16 +21,16 @@ function createAccount(nickname, password, firstName, lastName) {
   }
 }
 
-function addAccount(nickname, password, firstName, lastName) {
+function addAccount(nickname, passworld, firstName, lastName) {
   if (repositoryAccounts.find(a => a.nickname === nickname)) return false
-  const account = createAccount(nickname, password, firstName, lastName)
+  const account = createAccount(nickname, passworld, firstName, lastName)
   repositoryAccounts.push(account)
   return true
 }
 
-function findAccount(nickname, password) {
+function findAccount(nickname, passworld) {
   return repositoryAccounts.find(
-    a => a.nickname === nickname && a.password === password
+    a => a.nickname === nickname && a.passworld === passworld
   )
 }
 
@@ -55,3 +55,27 @@ function findEmails(emailAddress) {
 }
 
 export { addAccount, findAccount, addEmail, findEmails }
+
+// addAccount('alice', '1234', 'Alice', 'Smith')
+// addAccount('bob', '5678', 'Bob', 'Johnson')
+
+// console.log(
+//   'Аккаунты:',
+//   findAccount('alice', '1234'),
+//   findAccount('bob', '5678')
+// )
+
+// addEmail('Привет!', 'Как дела, Боб?', 'alice@mailbox.com', 'bob@mailbox.com')
+
+// addEmail(
+//   'Ответ',
+//   'Привет, Алиса! Всё отлично.',
+//   'bob@mailbox.com',
+//   'alice@mailbox.com'
+// )
+
+// const bobsEmails = findEmails('bob@mailbox.com')
+// console.log('Письма Боба:', bobsEmails)
+
+// const alicesEmails = findEmails('alice@mailbox.com')
+// console.log('Письма Алисы:', alicesEmails)
