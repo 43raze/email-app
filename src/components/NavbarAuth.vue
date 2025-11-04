@@ -17,7 +17,7 @@ export default {
 
 <template>
   <BNavbar type="dark" variant="primary" class="justify-content-between">
-    <BNavbarBrand href="#">Email App</BNavbarBrand>
+    <BNavbarBrand type="dark" variant="light" href="#">Email App</BNavbarBrand>
 
     <div>
       <div v-if="!isLoggedIn">

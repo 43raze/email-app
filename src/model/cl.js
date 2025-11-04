@@ -18,7 +18,6 @@ function login(nickname, password) {
 function sendEmail(subject, text, recipient) {
   const sender = currentAccount.emailAddress
   addEmail(subject, text, sender, recipient)
-  console.log('Hi', 'test', 'alice@mailbox.com')
 }
 
 function emailInbox() {
